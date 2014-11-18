@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Highcharts Example</title>
+
+	<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+
+	<script type="text/javascript">
+	$(function () {
+		$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=analytics.csv&callback=?', function (csv) {
+
+			Highcharts.Data.prototype.dateFormats['m/d/Y'] = {
+				regex: '^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2})$',
+				parser: function (match) {
+					return Date.UTC(+('20' + match[3]), match[1] - 1, +match[2]);
+				}
+			};
+
+
+			$('#container').highcharts({
+
+				data: {
+					csv: csv
+				},
+
+				title: {
+					text: '我的第一个Ajax加载的highcharts'
+				},
+
+				subtitle: {
+					text: '我的副标题'
+				},
+
+				xAxis: {
+					type: 'datetime',
+					tickInterval: 7 * 24 * 3600 * 1000, // one week
+					tickWidth: 0,
+					gridLineWidth: 1,
+					labels: {
+						align: 'left',
+						x: 3,
+						y: -3
+					}
+				},
+
+				yAxis:[{//left
+					title: {
+						text: null
+					},
+					labels: {
+						align: 'left' ,
+						x: 3,
+						y: 16,
+						formatter: function() {
+							return Highcharts.numberFormat(this.value, 0);
+						}
+					},
+					showFirstLable: false
+						},{//right
+							linkedTo: 0,
+							gridLineWidth: 0,
+							opposite: true,
+							title: {
+								text: null
+							},
+							labels: {
+								align: 'right',
+								x: -3,
+								y: 16,
+								formatter: function() {
+									return Highcharts.numberFormat(this.value,0);
+								}
+							},
+							showFistLabel:false
+						}],
+
+						legend: {
+							align: 'left',
+							verticalAlign: 'top',
+							y: 20,
+							floating: true,
+							borderWidth: 0
+						},
+
+						tooltip: {
+							shared: true,
+							crosshairs: true
+						},
+
+						plotOptions: {
+							series: {
+								cursor: 'pointer' ,
+								point: {
+									events: {
+										click: function() {
+											hs.htmlExpand(null, {
+												pageOrigin: {
+													x: this.pageX,
+													y: this.pageY
+												},
+												headingText: this.series.name,
+												maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x)+':<br/> '+ this.y +' visits',
+												width: 200
+											});
+										}
+									}
+								},
+								marker: {
+									lineWidth: 1
+								}
+							}
+						},
+
+						series: [{
+							name: '数据',
+							lineWidth: 4,
+							marker: {
+								radius: 4
+							}
+						}, {
+							name: '新阅读者'
+						}]
+					});
+	});
+
+});
+
+
+// 		$(function () {
+//     var categoryLinks = {
+//         'Foo': 'http://www.google.com/search?q=foo',
+//         'Bar': 'http://www.google.com/search?q=foo+bar',
+//         'Foobar': 'http://www.google.com/serach?q=foobar'
+//     };
+
+//     $('#container').highcharts({
+//         chart: {
+//         },
+
+//         xAxis: {
+//             categories: ['测试横坐标过程问题', 'Bar', 'Foobar'],
+
+//             labels: {
+//                 formatter: function() {
+//                     //获取到刻度值
+//                     var labelVal = this.value;
+//                     //实际返回的刻度值
+//                     var reallyVal = labelVal;
+//                     //判断刻度值的长度
+//                     if(labelVal.length > 3)
+//                     {
+//                         //截取刻度值
+//                         reallyVal = labelVal.substr(0,3)+"<br/>"+labelVal.substring(3,labelVal.length-1);
+//                     }
+//                     return reallyVal;
+//                 }
+//             }
+//         },
+
+//         series: [{
+//             data: [29.9, 71.5, 106.4]        
+//         }]
+//     });
+// });
+</script>
+</head>
+<body>
+	<script src="js/highcharts.js"></script>
+	<script src="js/modules/data.js"></script>
+	<script src="js/modules/exporting.js"></script>
+
+	<!-- Additional files for the Highslide popup effect -->
+	<!--<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide-full.min.js"></script>
+	<script type="text/javascript" src="http://www.highcharts.com/highslide/highslide.config.js" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="http://www.highcharts.com/highslide/highslide.css" /> -->
+
+	<div id="container" style="min-width: 250px; height: 400px; margin: 0 auto"></div>
+
+</body>
+</html>

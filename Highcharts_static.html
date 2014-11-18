@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 导出 -->
+	<script src="js/modules/exporting.js"></script>
+	<!-- 主题 -->
+	<script src="js/themes/gray.js"></script>
+	<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/4.0.1/highcharts.js"></script>
+</head>
+<body>
+    <script src="js/highcharts.js"></script>
+    <script src="js/modules/data.js"></script>
+    <script src="js/modules/exporting.js"></script>
+	<div id="container" style="min-width:800px;height:400px;"></div>
+
+    <div id="chart-container-1" style="min-width:800px;height:400px"></div>
+    <script type="text/javascript">
+    $(function () { 
+    $('#container').highcharts({                   //图表展示容器，与div的id保持一致
+    	chart: {
+            type: 'column'                         //指定图表的类型，默认是折线图（line）
+        },
+        title: {
+        	useHTML:true,
+            text: "Highcharts中文网 | <a href='http://www.hcharts.cn' target='_blank'>中文教程</a>"       //指定图表标题
+        },
+        xAxis: {
+        	title:{
+        		text:'x轴标题'
+        	},
+        },
+        yAxis: {
+        	title:{
+        		text:'y轴标题'
+        	},
+        	labels: {
+        		formatter:function(){
+        			if(this.value <=2) { 
+        				return "第一等级("+this.value+")";
+        			}else if(this.value >3 && this.value <=5) { 
+        				return "第二等级("+this.value+")"; 
+        			}else { 
+        				return "第三等级("+this.value+")";
+        			}
+        		}
+        	}
+        },
+        series: [{                                 //指定数据列
+            name: 'Jane',                          //数据列名
+            data: [1, 2, 4]                        //数据
+        }, {
+        	name: 'John',
+        	data: [5, 7, 3]
+        }]
+    });
+});
+
+
+$(function () { 
+    $('#chart-container-1').highcharts({                   //图表展示容器，与div的id保持一致
+        cart: {
+            rendertoTo:'chart-container-1',
+            defaultSeriesType: 'bar'
+        },
+        title: {
+            text:'Fruit Consumption'
+        },
+        xAxis: {
+            categories:['Apples','Bananas','Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1,0,4]
+        }, {
+            name: 'John',
+            data: [5,7,3]
+        }]
+    });
+});
+
+
+
+    </script>
+</body>
+</html>

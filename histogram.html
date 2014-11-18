@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 导出 -->
+	<script src="js/modules/exporting.js"></script>
+	<!-- 主题 -->
+	<script src="js/themes/gray.js"></script>
+	<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/4.0.1/highcharts.js"></script>
+	<script>
+
+	function renderToHighchartsFunc(id,ticks,ticksValue){
+		alert(id)
+
+		new Highcharts.Chart({
+			chart: {
+				renderTo: id,
+				type: 'column'
+			},
+			title: {
+				text: ''
+			},
+			colors: ['#e16d70' ], // 柱状颜色
+			xAxis: {
+
+				lineWidth: 1,
+				tickLength:18,
+				labels:{
+
+				// rotation:30, // X 轴文字方向
+				style: {
+
+					color: '#3E576F',
+
+					fontSize:12,
+
+					fontFamily:'"Trebuchet MS", Arial, Helvetica, sans-serif'
+
+				}
+
+			},
+
+			categories: ticks
+
+		},
+
+		yAxis: {
+
+			min: 0,
+
+			max:100,
+
+			tickInterval: 10,
+
+			title: {
+
+				text: ''
+
+			},
+
+			labels: {
+
+				format: '{value}%'
+
+			}
+
+		},
+
+		credits: {
+
+			enabled: false
+
+		},
+
+		series: [{
+
+			name: ' ',
+
+			data: ticksValue
+
+		}],
+
+		legend: {
+		 enabled: false // 图标分类说明
+		},
+
+		plotOptions: {
+
+			column: {
+
+				pointPadding: 0.2,
+
+				borderWidth: 0,
+
+				pointWidth: 18
+
+			}
+
+		},
+
+		tooltip:{
+
+			enabled:true,
+
+			headerFormat:'<span style="font-size: 12px">{point.key}</span>',
+
+			style: {
+
+				color: '#3E576F',
+
+				fontSize:12,
+
+				fontFamily:'"Trebuchet MS", Arial, Helvetica, sans-serif'
+
+			},
+
+			point: {
+
+				events: {
+
+					click: function() {
+
+
+
+					}
+
+				}
+
+			}	
+
+		}
+
+	});
+
+}
+
+
+window.onload = function()
+{
+
+	var gd_ranking_ctn_1 ={ '汕尾':100, '河源':80, '江门':70, '阳江':60, '揭阳':50, '韶关':40, '潮州':99, '东莞':90, '肇庆':41, '梅州':20, '中山':60, '惠州':60, '揭阳1':50, '韶关1':40, '潮州1':18, '东莞1':70, '肇庆1':41, '梅州1':20, '中山1':20,'惠州1':80};
+
+	var gd_ranking_ctn_1_name = [ ], gd_ranking_ctn_1_value = [ ];
+
+	for(var key in gd_ranking_ctn_1){
+
+		gd_ranking_ctn_1_name.push(key);
+
+		gd_ranking_ctn_1_value.push(gd_ranking_ctn_1[key]);
+
+	}
+
+	renderToHighchartsFunc('gd_ranking_ctn_1',gd_ranking_ctn_1_name,gd_ranking_ctn_1_value);
+
+}
+
+</script>
+</head>
+<body>
+	<div id="gd_ranking_ctn_1"></div>
+</body>
+</html>
